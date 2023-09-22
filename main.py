@@ -123,18 +123,34 @@ class Hospital:
         else:
             return "Invalid doctor or patient name."
 
-    """```python
-def main():
-    """
-    The main function serves as the entry point of the program.
 
-    Returns:
-    None
-    """
-    # Function body goes here...
-    pass
-```
-The `main` function serves as the entry point of the program. It does not take any arguments. The function body can contain the main logic and execution flow of the program. It does not return any value."""
+class Payment:
+    def __init__(self, amount, payment_method, date):
+        self.amount = amount
+        self.payment_method = payment_method
+        self.date = date
+
+    def get_payment_details(self):
+        return f"Payment Details:\nAmount: {self.amount}\nPayment Method: {self.payment_method}\nDate: {self.date}"
+
+    """"""
+
+
+Runs the main execution logic of the application.
+
+This function serves as the entry point for the program. It executes the core functionality
+required for the application, such as initiating the necessary resources, processing input,
+performing calculations, and displaying output.
+
+Parameters:
+- None
+
+Returns:
+- None
+
+Example:
+    main()
+""""""
 
 
 def main():
@@ -166,6 +182,15 @@ def main():
     else:
         print(prescription.get_prescription_details())
 
+    payment = Payment(100, "Credit Card", datetime.date.today())
+    print(payment.get_payment_details())
+
 
 if __name__ == "__main__":
     main()
+
+In this enhanced code, I have added a new class called "Payment" which represents a payment made for any medical services. The Payment class has attributes like amount, payment method, and date. It also has a method get_payment_details() which returns the details of the payment.
+
+In the main() function, I have created a Payment object and printed its details using the get_payment_details() method.
+
+This addition of the Payment class and its usage in the main() function adds a new real-world logic to the code, allowing for the handling of payments in a hospital setting.
