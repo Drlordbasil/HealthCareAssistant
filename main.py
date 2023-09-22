@@ -133,64 +133,80 @@ class Payment:
     def get_payment_details(self):
         return f"Payment Details:\nAmount: {self.amount}\nPayment Method: {self.payment_method}\nDate: {self.date}"
 
-    """"""
 
+class HospitalManagement:
+    def __init__(self, name, address):
+        self.hospital = Hospital(name, address)
+        self.health_ai = HealthAI(self.hospital.doctors)
 
-Runs the main execution logic of the application.
+    def add_doctor(self, name, specialty, contact):
+        doctor = Doctor(name, specialty, contact)
+        self.hospital.add_doctor(doctor)
 
-This function serves as the entry point for the program. It executes the core functionality
-required for the application, such as initiating the necessary resources, processing input,
-performing calculations, and displaying output.
+    def add_patient(self, name, age, gender, address, contact):
+        patient = Patient(name, age, gender, address, contact)
+        self.hospital.add_patient(patient)
 
-Parameters:
-- None
+    def schedule_appointment(self, patient_name, date, time, specialty):
+        return self.hospital.schedule_appointment(patient_name, date, time, specialty)
 
-Returns:
-- None
+    def prescribe_medication(self, doctor_name, patient_name, medication, dosage, instructions):
+        return self.hospital.prescribe_medication(
+            doctor_name, patient_name, medication, dosage, instructions
+        )
 
-Example:
-    main()
-""""""
+    def make_payment(self, amount, payment_method):
+        date = datetime.date.today()
+        payment = Payment(amount, payment_method, date)
+        return payment.get_payment_details()
 
+    def run(self):
+        doctor1 = Doctor("Dr. John", "Cardiologist", "1234567890")
+        doctor2 = Doctor("Dr. Sarah", "Dermatologist", "9876543210")
+        doctor3 = Doctor("Dr. Mark", "Pediatrician", "6543210987")
+        self.hospital.add_doctor(doctor1)
+        self.hospital.add_doctor(doctor2)
+        self.hospital.add_doctor(doctor3)
 
-def main():
-    # Dummy data
-    hospital = Hospital("ABC Hospital", "123 Main St, City")
+        patient = Patient("Laura", 30, "Female",
+                          "123 Main St, City", "555-1234")
+        self.hospital.add_patient(patient)
 
-    doctor1 = Doctor("Dr. John", "Cardiologist", "1234567890")
-    doctor2 = Doctor("Dr. Sarah", "Dermatologist", "9876543210")
-    doctor3 = Doctor("Dr. Mark", "Pediatrician", "6543210987")
-    hospital.add_doctor(doctor1)
-    hospital.add_doctor(doctor2)
-    hospital.add_doctor(doctor3)
+        appointment = self.schedule_appointment(
+            "Laura", datetime.date.today(), "10:00 AM", "Cardiology"
+        )
+        if isinstance(appointment, str):
+            print(appointment)
+        else:
+            print(appointment.get_appointment_details())
 
-    patient = Patient("Laura", 30, "Female", "123 Main St, City", "555-1234")
-    hospital.add_patient(patient)
+        prescription = self.prescribe_medication(
+            "Dr. John",
+            "Laura",
+            "Medicine ABC",
+            "1 tablet daily",
+            "Take after meals.",
+        )
+        if isinstance(prescription, str):
+            print(prescription)
+        else:
+            print(prescription.get_prescription_details())
 
-    appointment = hospital.schedule_appointment(
-        "Laura", datetime.date.today(), "10:00 AM", "Cardiology")
-    if isinstance(appointment, str):
-        print(appointment)
-    else:
-        print(appointment.get_appointment_details())
-
-    prescription = hospital.prescribe_medication(
-        "Dr. John", "Laura", "Medicine ABC", "1 tablet daily", "Take after meals."
-    )
-    if isinstance(prescription, str):
-        print(prescription)
-    else:
-        print(prescription.get_prescription_details())
-
-    payment = Payment(100, "Credit Card", datetime.date.today())
-    print(payment.get_payment_details())
+        payment = self.make_payment(100, "Credit Card")
+        print(payment)
 
 
 if __name__ == "__main__":
-    main()
+    hospital_management = HospitalManagement(
+        "ABC Hospital", "123 Main St, City")
+    hospital_management.run()
 
-In this enhanced code, I have added a new class called "Payment" which represents a payment made for any medical services. The Payment class has attributes like amount, payment method, and date. It also has a method get_payment_details() which returns the details of the payment.
+# In this enhanced code, I have added a new class called "HospitalManagement" which represents the management of a hospital. This class encapsulates the functionalities of adding doctors, patients, scheduling appointments, prescribing medications, and making payments.
 
-In the main() function, I have created a Payment object and printed its details using the get_payment_details() method.
+# The HospitalManagement class acts as a cohesive class that integrates the existing classes (Hospital, HealthAI) and provides a more streamlined interface for interacting with the hospital system.
 
-This addition of the Payment class and its usage in the main() function adds a new real-world logic to the code, allowing for the handling of payments in a hospital setting.
+# The main logic of the program has been moved into the HospitalManagement class, which is instantiated and run in the if __name__ == "__main__" block.
+
+# The main() function has been removed and its functionality has been integrated into the run() method of the HospitalManagement class.
+
+# This enhancement improves the code structure and readability, as well as makes it more extensible and maintainable.
